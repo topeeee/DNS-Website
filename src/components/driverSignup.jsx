@@ -28,7 +28,7 @@ const createDriver = async () => {
   const body2 = {username:email, password}
   try {
     const res =   await axios.post("http://165.22.116.11:8001/admin/users/", body2);
-    const body = {firstName, lastName, email, phoneNo, residentialAddress, status, pin:res.data.id, licenseNo, nin, lasdriId};
+    const body = {firstName, lastName, email, phoneNo:'+234' + phoneNo.substr(1), residentialAddress, status, pin:res.data.id, _type: 1};
     await axios.post("http://165.22.116.11:7042/api/me/drivers/", body,
         {
           headers: {
@@ -96,25 +96,25 @@ useEffect(()=> {
                     <input type="number" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                            placeholder="phone number" name="phoneNo" onChange={onChange}  value={phoneNo} required/>
                   </div>
-                  <div className="form-group" style={{marginBottom: "30px"}}>
-                    {/*<label htmlFor="exampleInputEmail1">Organisation Name</label>*/}
-                    <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                           placeholder="Residential address" name="residentialAddress" onChange={onChange} value={residentialAddress} required/>
-                  </div>
-                  <div className="form-group" style={{marginBottom: "30px"}}>
-                    {/*<label htmlFor="exampleInputEmail1">Contact Phone Number </label>*/}
-                    <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                           placeholder="License number" name="licenseNo" onChange={onChange} value={licenseNo} required/>
-                  </div>
-                  <div className="form-group" style={{marginBottom: "30px"}}>
-                    {/*<label htmlFor="exampleInputEmail1">Organisation Email Address</label>*/}
-                    <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="NIM" name="nin" onChange={onChange} value={nin} required/>
-                  </div>
-                  <div className="form-group" style={{marginBottom: "30px"}}>
-                    {/*<label htmlFor="exampleInputEmail1">Contact Phone Number </label>*/}
-                    <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                           placeholder="LASDRI Id" name="lasdriId" onChange={onChange} value={lasdriId} required/>
-                  </div>
+                  {/*<div className="form-group" style={{marginBottom: "30px"}}>*/}
+                  {/*  /!*<label htmlFor="exampleInputEmail1">Organisation Name</label>*!/*/}
+                  {/*  <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"*/}
+                  {/*         placeholder="Residential address" name="residentialAddress" onChange={onChange} value={residentialAddress} required/>*/}
+                  {/*</div>*/}
+                  {/*<div className="form-group" style={{marginBottom: "30px"}}>*/}
+                  {/*  /!*<label htmlFor="exampleInputEmail1">Contact Phone Number </label>*!/*/}
+                  {/*  <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"*/}
+                  {/*         placeholder="License number" name="licenseNo" onChange={onChange} value={licenseNo} required/>*/}
+                  {/*</div>*/}
+                  {/*<div className="form-group" style={{marginBottom: "30px"}}>*/}
+                  {/*  /!*<label htmlFor="exampleInputEmail1">Organisation Email Address</label>*!/*/}
+                  {/*  <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="NIM" name="nin" onChange={onChange} value={nin} required/>*/}
+                  {/*</div>*/}
+                  {/*<div className="form-group" style={{marginBottom: "30px"}}>*/}
+                  {/*  /!*<label htmlFor="exampleInputEmail1">Contact Phone Number </label>*!/*/}
+                  {/*  <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"*/}
+                  {/*         placeholder="LASDRI Id" name="lasdriId" onChange={onChange} value={lasdriId} required/>*/}
+                  {/*</div>*/}
                   <div className="form-group" style={{marginBottom: "30px"}}>
                     {/*<label htmlFor="exampleInputEmail1">Contact Phone Number </label>*/}
                     <input type="password" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"

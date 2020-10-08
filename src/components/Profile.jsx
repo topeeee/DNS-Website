@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-import {getDriver, isLoading} from "../store/actions/driverAction";
+import ProgressBar from 'react-bootstrap/ProgressBar'
+import {getDriver} from "../store/actions/driverAction";
 import {connect} from "react-redux"
 import Spinner from "./spinner";
 
 
 const Profile = ({driver, getDriver, isLoading}) => {
     const [id] = useState(sessionStorage.getItem('id'))
+    const [now, setNow] = useState(10)
+    const [variant, setVariant] = useState('primary')
 
 
     useEffect(()=> {
@@ -18,6 +21,24 @@ const Profile = ({driver, getDriver, isLoading}) => {
     useEffect(()=> {
        window.scroll(0, 0)
     },[])
+
+    useEffect(()=>{
+        if(driver) {
+            if(driver.lasdriIdStatus ==1 && driver.licenseStatus == 1 && driver.ninStatus == 1) {
+                setNow(100)
+                setVariant('success')
+            } else if(driver.lasdriIdStatus ==1 && driver.licenseStatus == 0 && driver.ninStatus ==0){
+                setNow(30)
+                setVariant('danger')
+            } else if(driver.lasdriIdStatus ==1 && ((driver.licenseStatus == 1 && driver.ninStatus ==0) || (driver.licenseStatus == 0 && driver.ninStatus == 1))){
+                setNow(60)
+                setVariant('warning')
+            }
+        }
+    },[driver])
+
+
+    const progressInstance = <ProgressBar  variant={variant} now={now}  label={`${now}%`} />;
 
     return (
         <div className="container">
@@ -35,6 +56,8 @@ const Profile = ({driver, getDriver, isLoading}) => {
                         <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" className="avatar img-circle img-thumbnail" alt="avatar" />
                         <h6>{driver.firstName} {driver.lastName}</h6>
                     </div>
+                    <div>{progressInstance}</div>
+
                     <ul className="list-group">
                         <li className="list-group-item text-muted">Activity <i className="fa fa-dashboard fa-1x"></i>
                         </li>
@@ -77,7 +100,7 @@ const Profile = ({driver, getDriver, isLoading}) => {
                                     className="pull-left"><strong>Last name</strong></span>{driver.lastName? driver.lastName: 'not available'}
                                 </li>
                                 <li className="list-group-item text-right"><span
-                                    className="pull-left"><strong>phone number</strong></span>{driver.phoneNo? driver.phoneNo: 'not available'}
+                                    className="pull-left"><strong>phone number</strong></span>{driver.phoneNo? '0' + driver.phoneNo.substr(4): 'not available'}
                                 </li>
                                 <li className="list-group-item text-right"><span
                                     className="pull-left"><strong>Residential Address</strong></span>{driver.residentialAddress? driver.residentialAddress: 'not available'}
@@ -97,9 +120,12 @@ const Profile = ({driver, getDriver, isLoading}) => {
                                 <li className="list-group-item text-right"><span
                                     className="pull-left"><strong>Blood Group</strong></span>{driver.bloodGroup? driver.bloodGroup: 'not available'}
                                 </li>
-                                <li className="list-group-item text-right"><span
-                                    className="pull-left"><strong>Facial Marks</strong></span>{driver.facialMark? driver.facialMark: 'not available'}
-                                </li>
+                                {(driver.facialMark && driver.facialMark == 0) && <li className="list-group-item text-right"><span
+                                    className="pull-left"><strong>Facial Marks</strong></span>{driver.facialMark == 0? 'Yes': 'not available'}
+                                </li>}
+                                {(driver.facialMark && driver.facialMark == 1) && <li className="list-group-item text-right"><span
+                                    className="pull-left"><strong>Facial Marks</strong></span>{driver.facialMark == 1? 'No': 'not available'}
+                                </li>}
                                 <li className="list-group-item text-right"><span
                                     className="pull-left"><strong>Disability</strong></span>{driver.disability? driver.disability: 'not available'}
                                 </li>

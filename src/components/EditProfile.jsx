@@ -6,10 +6,10 @@ import {connect} from "react-redux";
 
 const EditProfile = ({updateDriver, getDriver, driver, isLoading}) => {
     const [image, setImage] = useState({image: 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png'})
-    const [formData, setFormData] = useState({firstName: "",lastName: "",  email: "", phoneNo: "", residentialAddress: "", licenseNo: "", nin: "", lasdriId: "", stateOfOrigin: '', dateOfBirth:'', bloodGroup: ''});
+    const [formData, setFormData] = useState({firstName: "",lastName: "",  email: "", phoneNo: "", residentialAddress: "", licenseNo: "", nin: "", lasdriId: "", stateOfOrigin: '', dateOfBirth:'', bloodGroup: '', facialMark: '', disability: '', eyeGlasses: ''});
     const [id] = useState(sessionStorage.getItem('id'))
     const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-    const { firstName, lastName, email, phoneNo, residentialAddress, status, pin, licenseNo, nin, lasdriId, dateOfBirth, stateOfOrigin, bloodGroup } = formData;
+    const { firstName, lastName, email, phoneNo, residentialAddress, status, pin, licenseNo, nin, lasdriId, dateOfBirth, stateOfOrigin, bloodGroup, facialMark, disability, eyeGlasses } = formData;
 
     const onImageChange = (event) => {
         if (event.target.files && event.target.files[0]) {
@@ -27,15 +27,19 @@ const EditProfile = ({updateDriver, getDriver, driver, isLoading}) => {
 
     useEffect(() => {
         if(driver) {
-            setFormData({firstName: driver.firstName, lastName: driver.lastName,  email: driver.email, phoneNo: driver.phoneNo, residentialAddress: driver.residentialAddress, licenseNo: driver.licenseNo, nin: driver.nin, lasdriId: driver.lasdriId, stateOfOrigin: driver.stateOfOrigin, dateOfBirth:driver.dateOfBirth, bloodGroup:driver.bloodGroup});
+            setFormData({firstName: driver.firstName, lastName: driver.lastName,  email: driver.email, phoneNo: driver.phoneNo, residentialAddress: driver.residentialAddress, licenseNo: driver.licenseNo?driver.licenseNo: '', nin: driver.nin?driver.nin: '', lasdriId: driver.lasdriId?driver.lasdriId: '', stateOfOrigin: driver.stateOfOrigin?driver.stateOfOrigin:'', dateOfBirth:driver.dateOfBirth?driver.dateOfBirth:'', bloodGroup:driver.bloodGroup?driver.bloodGroup:'', facialMark: driver.facialMark?driver.facialMark:'', disability: driver.disability?driver.disability:'', eyeGlasses: driver.eyeGlasses?driver.eyeGlasses:''});
         }
     },[driver])
 
 
     const onSubmit = (e) => {
         e.preventDefault();
-        updateDriver(id, firstName, lastName, email, phoneNo, residentialAddress, status, pin, licenseNo, nin, lasdriId, dateOfBirth, stateOfOrigin, bloodGroup)
+        updateDriver(id, firstName, lastName, email, phoneNo, residentialAddress, status, pin, licenseNo, nin, lasdriId, dateOfBirth, stateOfOrigin, bloodGroup, disability, facialMark, eyeGlasses)
     }
+
+    console.log(disability, 'dddddddd')
+    console.log(facialMark, 'fffff')
+    console.log(eyeGlasses, 'eeeeeeeeeee')
 
     return (
         <div className="container">
@@ -109,44 +113,57 @@ const EditProfile = ({updateDriver, getDriver, driver, isLoading}) => {
 
                                     <div className="col-xs-6">
                                         <label><h4>Blood Group</h4></label>
-                                        <input type="text" onChange={onChange} className="form-control"  placeholder="example O+" title="enter your password2." value={bloodGroup} name="bloodGroup"/>
+                                        <input type="text" onChange={onChange} className="form-control"  placeholder="example O+" title="enter your blood group." value={bloodGroup} name="bloodGroup"/>
                                     </div>
                                 </div>
                                 <div className="form-group">
 
                                     <div className="col-xs-6">
                                         <label><h4>License Number</h4></label>
-                                        <input type="text" onChange={onChange} className="form-control"  placeholder="example PL09087878GHb" title="enter your password2." value={licenseNo} name="licenseNo"/>
+                                        <input type="text" onChange={onChange} className="form-control"  placeholder="example PL09087878GHb" title="enter your license number." value={licenseNo} name="licenseNo"/>
                                     </div>
                                 </div>
                                 <div className="form-group">
 
                                     <div className="col-xs-6">
-                                        <label><h4>Nim Number</h4></label>
-                                        <input type="text" onChange={onChange} className="form-control"  placeholder="example 129876565Vg" title="enter your password2."  value={nin} name="nin"/>
+                                        <label><h4>NIN Number</h4></label>
+                                        <input type="text" onChange={onChange} className="form-control"  placeholder="example 129876565Vg" title="enter your nin."  value={nin} name="nin"/>
                                     </div>
                                 </div>
                                 <div className="form-group">
                                     <div className="col-xs-6">
                                         <label><h4>LASDRI ID</h4></label>
-                                        <input type="text" className="form-control"  placeholder="example 098976545PL" title="enter your password2." value={lasdriId} name="lasdriId"/>
+                                        <input type="text" className="form-control" onChange={onChange}  placeholder="example 098976545PL" title="enter your lasdri id." value={lasdriId} name="lasdriId"/>
                                     </div>
                                 </div>
                                 <div className="form-group">
-                                    <div className="col-xs-6" style={{marginTop: "10px"}}>
-                                        <label><h4>Check If Eye Glass</h4></label>
-                                            <input className="form-check-input" type="checkbox" id="inlineCheckbox1"
-                                                   value="option1" style={{width:"20px", height: "30px", marginLeft: "5px"}} />
+                                    <div className="col-xs-6">
+                                        <label><h4>Eye Glass</h4></label>
+                                        <select className="form-control"  onChange={onChange} value={eyeGlasses} name="eyeGlasses">
+                                            <option value={''}>Select</option>
+                                            <option value={'Yes'}>Yes</option>
+                                            <option value={'No'}>No</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div className="form-group">
-                                    <div className="col-xs-6" style={{marginTop: "10px"}}>
-                                        <label><h4>Check If Facial Mark</h4></label>
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" id="inlineCheckbox1"
-                                                   value="option1" style={{width:"20px", height: "30px", marginLeft: "5px"}} />
-                                            {/*<label className="form-check-label"><h4>yes</h4></label>*/}
-                                        </div>
+                                    <div className="col-xs-6">
+                                        <label><h4>Facial Mark</h4></label>
+                                        <select className="form-control"  onChange={onChange} value={facialMark} name="facialMark">
+                                            <option value={''}>Select</option>
+                                            <option value={0}>Yes</option>
+                                            <option value={1}>No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="col-xs-6">
+                                        <label><h4>Disability</h4></label>
+                                        <select className="form-control"  onChange={onChange} value={disability} name="disability">
+                                            <option value={''}>Select</option>
+                                            <option value={'Yes'}>Yes</option>
+                                            <option value={'No'}>No</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div className="form-group">
@@ -179,7 +196,7 @@ const EditProfile = ({updateDriver, getDriver, driver, isLoading}) => {
 
 function mapDispatchToProps(dispatch) {
     return {
-        updateDriver: (id, firstName, lastName, email, phoneNo, residentialAddress, status, pin, licenseNo, nin, lasdriId, dateOfBirth, stateOfOrigin, bloodGroup) => dispatch(updateDriver(id, firstName, lastName, email, phoneNo, residentialAddress, status, pin, licenseNo, nin, lasdriId, dateOfBirth, stateOfOrigin, bloodGroup)),
+        updateDriver: (id, firstName, lastName, email, phoneNo, residentialAddress, status, pin, licenseNo, nin, lasdriId, dateOfBirth, stateOfOrigin, bloodGroup, disability, facialMark, eyeGlasses) => dispatch(updateDriver(id, firstName, lastName, email, phoneNo, residentialAddress, status, pin, licenseNo, nin, lasdriId, dateOfBirth, stateOfOrigin, bloodGroup, disability, facialMark, eyeGlasses)),
         getDriver: (id) => dispatch(getDriver(id)),
     };
 }

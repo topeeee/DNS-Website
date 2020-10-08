@@ -41,9 +41,12 @@ const DriverLogin = ({isAuthenticated, isLoading, error, LogIn}) => {
                   </div>
                   <div className="form-group" style={{marginBottom: "30px"}}>
                     <label htmlFor="exampleInputEmail1">Password</label>
-                    <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                    <input type="password" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                            name="password" onChange={onChange}  value={password} required/>
                   </div>
+                  {error &&
+                  <div className="text-success w-100 text-white text-capitalize" style={{marginBottom: "30px", padding: '10px', backgroundColor: 'red', color: "white"}}>{error.status === 404? 'Email or Password is Incorrect': 'Something went wrong, try again later'}</div>
+                  }
                   <div style={{display:"flex", alignItems:"center", justifyContent:"center", width: "100%"}}>
                     <button type="submit" className="btn btn-warning">Login {isLoading && <i className="fa fa-spinner fa-spin"></i>}</button>
 
@@ -67,7 +70,7 @@ function mapDispatchToProps(dispatch) {
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   isLoading: state.auth. isLoading,
-  errors: state.auth.errors
+  error: state.auth.errors
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DriverLogin);

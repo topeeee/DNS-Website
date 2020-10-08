@@ -1,8 +1,9 @@
 import {
+  AUTH_ERROR,
   LOADING,
   LOGIN_SUCCESS,
 
-  LOGOUT
+  LOGOUT, REMOVE_AUTH_ERROR
 } from "../actionTypes";
 
 const initialState = {
@@ -33,6 +34,17 @@ function authenticationReducer(state = initialState, action) {
     case LOADING: {
       return {
         isLoading: true
+      };
+    }
+    case AUTH_ERROR: {
+      return {
+        isLoading: false,
+        errors: payload
+      };
+    }
+    case REMOVE_AUTH_ERROR: {
+      return {
+        errors: null
       };
     }
     default:

@@ -35,8 +35,8 @@ export const createDriver = (firstName, lastName, email, phoneNo, residentialAdd
   }
 };
 
-export const updateDriver = (id, firstName, lastName, email, phoneNo, residentialAddress, status, pin, licenseNo, nin, lasdriId, dateOfBirth, stateOfOrigin, bloodGroup) => async dispatch => {
-  const body = {firstName, lastName, email, phoneNo, residentialAddress, status, pin, licenseNo, nin, lasdriId, dateOfBirth, stateOfOrigin, bloodGroup};
+export const updateDriver = (id, firstName, lastName, email, phoneNo, residentialAddress, status, pin, licenseNo, nin, lasdriId, dateOfBirth, stateOfOrigin, bloodGroup, disability, facialMark, eyeGlasses) => async dispatch => {
+  const body = {firstName, lastName, email, phoneNo, residentialAddress, status, pin, licenseNo, nin, lasdriId, dateOfBirth, stateOfOrigin, bloodGroup, disability, facialMark, eyeGlasses};
   dispatch(isLoading())
   try {
     const res = await axios.put(`${api.driver}/api/drivers/${id}/`, body, {

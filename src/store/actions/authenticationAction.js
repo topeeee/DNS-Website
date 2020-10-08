@@ -32,15 +32,15 @@ export const LogIn = (username, password) => async dispatch => {
     window.location.href = "/profile";
     // dispatch(autoLogin())
 
-  } catch (err) {
+  } catch (error) {
     dispatch({
       type: AUTH_ERROR,
-      payload: err.response
+      payload: error.response
     });
 
       setTimeout(() => dispatch({
         type: REMOVE_AUTH_ERROR
-      }), 5000)
+      }), 3000)
   }
 };
 
